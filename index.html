@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLUB ROYAL - Asakusa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+JP:wght@400;700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg-black: #000000; }
+        body { background-color: #ffffff; color: #000; font-family: 'Noto Sans JP', sans-serif; margin: 0; padding-top: 75px; overflow-x: hidden; }
+        
+        .fixed-header { position: fixed; top: 0; left: 0; width: 100%; height: 75px; background: #fff; display: flex; justify-content: center; align-items: center; z-index: 2000; box-shadow: 0 1px 10px rgba(0,0,0,0.1); }
+        .header-logo { height: 45px; }
+
+        .tiktok-hero { padding: 60px 20px; background: #ffffff; text-align: center; border-bottom: 1px solid #f0f0f0; }
+        .live-label { display: inline-block; background: #000; color: #fff; padding: 6px 20px; border-radius: 2px; font-weight: 700; font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 20px; }
+        .tiktok-title { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
+        .tiktok-msg { font-size: 0.95rem; font-weight: 700; color: #000; margin-bottom: 30px; line-height: 1.8; }
+        .time-badge { background: #f5f5f5; padding: 2px 8px; border-radius: 4px; font-family: 'Montserrat'; margin: 0 2px; }
+        .tiktok-main-btn { display: inline-block; padding: 18px 50px; background: #000; color: #fff; text-decoration: none; font-weight: 700; border-radius: 50px; font-size: 1rem; letter-spacing: 2px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .member-section { max-width: 600px; margin: 0 auto; padding: 40px 15px 10px; background: #fff; text-align: center; }
+        .list-header-wrapper { margin-bottom: 30px; }
+        .list-header-en { font-family: 'Dancing Script'; font-size: 2.2rem; margin: 0; line-height: 1; }
+        .list-header-jp { font-size: 0.75rem; color: #888; font-weight: 700; letter-spacing: 4px; margin-top: 5px; }
+        
+        .member-list { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+        .member-row { display: flex; align-items: center; background: #ffffff; padding: 18px 15px; border-radius: 15px; text-decoration: none; color: #000000; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .member-icon { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 1px solid #000; box-shadow: 0 0 0 4px #fff, 0 0 0 5px #f0f0f0; flex-shrink: 0; }
+        .member-body { flex-grow: 1; padding: 0 20px; }
+        .name-wrapper { display: flex; align-items: baseline; gap: 10px; }
+        .name-en { font-family: 'Dancing Script', cursive; font-weight: 700; color: #000000; font-size: 2rem; margin: 0; }
+        .name-kana { font-size: 0.85rem; color: #888; font-weight: 700; }
+        .arrow { color: #eee; font-size: 1.2rem; }
+
+        .info-section { background: #fff; color: #000; padding: 60px 0 160px; text-align: center; border-top: 1px solid #eee; }
+        .info-title { font-weight: 700; font-size: 1rem; margin-bottom: 20px; letter-spacing: 3px; border-bottom: 1px solid #000; display: inline-block; padding-bottom: 5px; }
+        .info-address { font-size: 0.85rem; line-height: 2; margin-bottom: 30px; padding: 0 20px; }
+        .info-tel-text { font-size: 1.1rem; font-weight: 700; margin-bottom: 40px; }
+        .map-wrapper { width: 100%; height: 300px; background: #f5f5f5; border-top: 1px solid #eee; border-bottom: 1px solid #eee; overflow: hidden; }
+        .map-wrapper iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(5%) contrast(90%); }
+
+        .fixed-call-btn { position: fixed; bottom: 25px; left: 5%; width: 90%; height: 65px; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; font-size: 1.1rem; border-radius: 50px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <header class="fixed-header"><img src="./logo.png" class="header-logo"></header>
+    
+    <section class="tiktok-hero">
+        <div class="live-label">LIVE STREAMING</div>
+        <div class="tiktok-title">TikTok LIVE</div>
+        <p class="tiktok-msg">
+            ショー開催日 <span class="time-badge">21:00</span> / <span class="time-badge">23:00</span><br>
+            迫力のステージLIVEを配信中！
+        </p>
+        <a href="https://www.tiktok.com/@ari_project0309" target="_blank" class="tiktok-main-btn">
+            ショーを視聴する
+        </a>
+    </section>
+
+    <div class="member-section">
+        <div class="list-header-wrapper">
+            <h2 class="list-header-en">Show Members</h2>
+            <div class="list-header-jp">ショーメンバー</div>
+        </div>
+        <div id="member-list" class="member-list">
+            <p style="text-align:center; color:#888;">Loading...</p>
+        </div>
+    </div>
+
+    <section class="info-section">
+        <div class="info-title">SHOP INFO</div>
+        <div class="info-address">
+            〒111-0035<br>
+            東京都台東区西浅草3-1-11 YS-2ビル 3F
+        </div>
+        <div class="info-tel-text">☎︎ : 03-3844-5941</div>
+        <div class="map-wrapper">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.387747805166!2d139.7904044!3d35.716719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188e962b700f0b%3A0x8849b28a2a89045b!2z44CSMTExLTAwMzUg5p2x5Lqs6YO95Y-w5p2x5Yy66KW_5rWF6I2J77yT5LiB55uu77yR4oiS77yR77keIFlTLTLjg5Pjg6s!5e0!3m2!1sja!2sjp!4v1713710000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <a href="tel:0338445941" class="fixed-call-btn">
+        ☎︎ お電話で予約・お問合せ
+    </a>
+
+    <script>
+        // ★ゆゆさんのGASウェブアプリURLを設定済み
+        const API_URL = "https://script.google.com/macros/s/AKfycbz5QUA7_9SX8sURDtGicHr63YX4Na5savQztj-zpLafvC94kQvYN3DHGlntbL9kDp4Z/exec";
+
+        async function loadShowMembers() {
+            try {
+                const response = await fetch(API_URL);
+                const CAST_LIST = await response.json();
+                
+                let listHtml = "";
+                for(let i=0; i < CAST_LIST.length; i++){
+                    let c = CAST_LIST[i];
+                    // 画像の1枚目を取得
+                    let thumb = (c.imgs && c.imgs.length > 0 && c.imgs[0] !== "") ? c.imgs[0] : "logo.png";
+                    
+                    listHtml += `<a href="profile.html?id=${c.id}" class="member-row">
+                                    <img src="${thumb}" class="member-icon" onerror="this.src='logo.png'">
+                                    <div class="member-body">
+                                        <div class="name-wrapper">
+                                            <p class="name-en">${c.name}</p>
+                                            <p class="name-kana">${c.kana}</p>
+                                        </div>
+                                    </div>
+                                    <div class="arrow">〉</div>
+                                </a>`;
+                }
+                document.getElementById('member-list').innerHTML = listHtml;
+                // プロフィールページ用にデータを保存
+                localStorage.setItem('castData', JSON.stringify(CAST_LIST));
+                
+            } catch (e) {
+                console.error("データの読み込みに失敗しました", e);
+                document.getElementById('member-list').innerHTML = '<p style="text-align:center;">読み込みに失敗しました。更新してください。</p>';
+            }
+        }
+
+        loadShowMembers();
+    </script>
+</body>
+</html>

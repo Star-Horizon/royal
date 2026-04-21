@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFILE - CLUB ROYAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg-black: #000000; }
+        body { background: #ffffff; color: #000; font-family: 'Noto Sans JP', sans-serif; margin: 0; padding-top: 75px; padding-bottom: 50px; overflow-x: hidden; }
+        
+        /* 固定ヘッダー（トップと同じ） */
+        .fixed-header { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px; 
+            background: #fff; display: flex; justify-content: center; align-items: center; 
+            z-index: 2000; box-shadow: 0 1px 10px rgba(0,0,0,0.1); 
+        }
+        .header-logo { height: 45px; }
+        .back-link { 
+            position: absolute; left: 20px; 
+            color: #000; text-decoration: none; 
+            font-size: 0.9rem; font-weight: 700; 
+            display: flex; align-items: center;
+        }
+
+        /* プロフィールヘッダー */
+        .profile-header {
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fff;
+        }
+        
+        /* アイコンの縁取り */
+        .avatar-wrapper {
+            width: 85px; height: 85px;
+            border-radius: 50%;
+            background: #fff;
+            padding: 1px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 0 1px #000, 0 0 0 4px #fff, 0 0 0 5px #f0f0f0;
+            margin-left: 5px;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #000;
+        }
+
+        /* 名前とふりがな */
+        .user-info { flex-grow: 1; }
+        .name-wrapper { display: flex; align-items: baseline; gap: 10px; }
+        .name-en { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2.2rem; 
+            color: #000; 
+            margin: 0; 
+            line-height: 1;
+        }
+        .name-kana { font-size: 0.9rem; color: #888; font-weight: 700; }
+
+        /* プロフィール文 */
+        .profile-bio {
+            padding: 30px 20px;
+            font-size: 0.95rem;
+            line-height: 2;
+            color: #333;
+            white-space: pre-wrap;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        /* インスタ風3列グリッド */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2px;
+            padding: 2px;
+            background: #fff;
+        }
+        .grid-item { width: 100%; position: relative; overflow: hidden; }
+        .grid-item::after { content: ""; display: block; padding-bottom: 100%; }
+        .grid-item img { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            top: 0; 
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed-header">
+        <a href="index.html" class="back-link">〈 BACK</a>
+        <img src="./logo.png" alt="CLUB ROYAL" class="header-logo">
+    </header>
+
+    <div id="content">
+        </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const castId = urlParams.get('id');
+        const castData = JSON.parse(localStorage.getItem('castData'));
+        
+        if(castData){
+            const cast = castData.find(c => c.id === castId);
+            if(cast){
+                document.title = cast.name + " - PROFILE";
+
+                // ★画像の配列を作成。もし空欄やエラーなら空にする。
+                // onerror="this.style.display='none'" でエラー画像自体を消す（ロゴにしない）
+                let photoGridHtml = '';
+                if(cast.imgs && cast.imgs.length > 0 && cast.imgs[0] !== ""){
+                    photoGridHtml = `
+                        <div class="photo-grid">
+                            ${cast.imgs.map(img => `
+                                <div class="grid-item"><img src="${img}" onerror="this.style.display='none'"></div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-header">
+                        <div class="avatar-wrapper">
+                            <img src="${cast.imgs && cast.imgs[0] ? cast.imgs[0] : 'logo.png'}" class="avatar-img" onerror="this.src='logo.png'">
+                        </div>
+                        <div class="user-info">
+                            <div class="name-wrapper">
+                                <h1 class="name-en">${cast.name}</h1>
+                                <span class="name-kana">${cast.kana}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-bio">${cast.bio}</div>
+                    
+                    ${photoGridHtml}
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
